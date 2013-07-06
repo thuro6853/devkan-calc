@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import java.math.BigInteger;
 
 @Path("/calc")
 @Produces(MediaType.TEXT_PLAIN)
@@ -13,11 +14,12 @@ public class Calculator {
     @GET
     @Path("add")
     public String add(@QueryParam("a") int a, @QueryParam("b") int b) {
-        long actual = (long) a + b;
-        if (actual > Integer.MAX_VALUE || actual < Integer.MIN_VALUE) {
+        BigInteger actual = BigInteger.valueOf(a).add(BigInteger.valueOf(b));
+        if (actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+                || actual.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0) {
             String msg = String.format("a: %d, b: %d", a, b);
             throw new IllegalArgumentException(msg);
         }
-        return Long.toString(actual);
+        return actual.toString();
     }
 }

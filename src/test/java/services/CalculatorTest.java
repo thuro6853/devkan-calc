@@ -21,7 +21,9 @@ public class CalculatorTest {
         public static Iterable<Object[]> params() {
             return Arrays.asList(new Object[][]{
                     {1, 1, "2"},
-                    {1, 0, "1"}
+                    {1, 0, "1"},
+                    {Integer.MAX_VALUE, Integer.MIN_VALUE, "-1"},
+                    {Integer.MAX_VALUE, 0, Integer.toString(Integer.MAX_VALUE)}
             });
         }
 

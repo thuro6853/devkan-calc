@@ -1,20 +1,19 @@
-apply plugin: 'base'
+apply plugin: 'java'
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '1.6'
+repositories.mavenCentral()
+  
+sourceCompatibility = targetCompatibility = 1.7
+
+def enc = 'UTF-8'
+tasks.withType(AbstractCompile).each { it.options.encoding = enc }
+
+dependencies {
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.32.0'
 }
 
-subprojects {
-  apply plugin: 'java'
-  
-  sourceCompatibility = 1.7
-  targetCompatibility = 1.7
+task wrapper(type: Wrapper) { gradleVersion = '1.6' }
 
-  def enc = 'UTF-8'
-  tasks.withType(AbstractCompile).each { it.options.encoding = enc }
-  tasks.withType(GroovyCompile).each { it.groovyOptions.encoding = enc }
-
-  repositories {
-    mavenCentral()
-  }
+task writePom << {
+    pom().writeTo('pom.xml')
 }

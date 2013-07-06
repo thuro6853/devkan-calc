@@ -1,7 +1,0 @@
-include "calc-app"
-include "calc-selenium"
-include "calc-geb"
-
-rootProject.children.each {
-    it.buildFileName = it.name + ".gradle"
-}

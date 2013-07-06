@@ -15,11 +15,7 @@ public class Calculator {
     @Path("add")
     public String add(@QueryParam("a") int a, @QueryParam("b") int b) {
         BigInteger actual = BigInteger.valueOf(a).add(BigInteger.valueOf(b));
-        if (actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
-                || actual.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0) {
-            String msg = String.format("a: %d, b: %d", a, b);
-            throw new IllegalArgumentException(msg);
-        }
+        checkIntRange(actual, a, b);
         return actual.toString();
     }
 
@@ -27,11 +23,19 @@ public class Calculator {
     @Path("subtract")
     public String subtract(@QueryParam("a") int a, @QueryParam("b") int b) {
         BigInteger actual = BigInteger.valueOf(a).subtract(BigInteger.valueOf(b));
-        if (actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
-                || actual.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0) {
+        checkIntRange(actual, a, b);
+        return actual.toString();
+    }
+
+    private void checkIntRange(BigInteger actual, int a, int b) {
+        if (isOutOfInteger(actual)) {
             String msg = String.format("a: %d, b: %d", a, b);
             throw new IllegalArgumentException(msg);
         }
-        return actual.toString();
+    }
+
+    private boolean isOutOfInteger(BigInteger actual) {
+        return actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+                || actual.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0;
     }
 }

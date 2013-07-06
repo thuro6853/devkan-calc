@@ -22,4 +22,16 @@ public class Calculator {
         }
         return actual.toString();
     }
+
+    @GET
+    @Path("subtract")
+    public String subtract(@QueryParam("a") int a, @QueryParam("b") int b) {
+        BigInteger actual = BigInteger.valueOf(a).subtract(BigInteger.valueOf(b));
+        if (actual.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+                || actual.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0) {
+            String msg = String.format("a: %d, b: %d", a, b);
+            throw new IllegalArgumentException(msg);
+        }
+        return actual.toString();
+    }
 }

@@ -65,4 +65,18 @@ public class CalculatorTest {
             sut.add(a, b);
         }
     }
+
+    public static class Others {
+        Calculator sut = new Calculator();
+        @Test
+        public void 引き算_正常() {
+            String actual = sut.subtract(1, 1);
+            assertThat(actual, is("0"));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void 引き算_異常() {
+            sut.subtract(Integer.MIN_VALUE, 1);
+        }
+    }
 }

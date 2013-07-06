@@ -25,6 +25,7 @@ dependencies {
 
 test {
   exclude '**/*IT*'
+  exclude '**/*$*'
 }
 
 task integrationTest(type:Test) {

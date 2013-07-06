@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static com.thoughtworks.selenium.SeleneseTestCase.assertEquals;
+import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -15,11 +16,18 @@ public class CalculatorAcceptanceTest {
 
 	@Before
 	public void setUp() throws Exception {
+        String baseUrl = System.getProperty("host");
+        String context = System.getProperty("context");
+
+        if (baseUrl == null || context == null) {
+            System.out.println(System.getProperties());
+            fail("接続先未設定");
+        }
+
 		WebDriver driver = new FirefoxDriver();
-		String baseUrl = "http://localhost:8080/";
 		selenium = new WebDriverBackedSelenium(driver, baseUrl);
 
-        selenium.open("/devkan-calc/");
+        selenium.open(context);
 
         assertThat(selenium.getTitle(), is("The 電卓"));
 	}

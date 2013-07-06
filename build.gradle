@@ -12,6 +12,11 @@ dependencies {
     testCompile 'org.seleniumhq.selenium:selenium-java:2.32.0'
 }
 
+test {
+  systemProperties 'host' : host
+  systemProperties 'context' : context
+}
+
 task wrapper(type: Wrapper) { gradleVersion = '1.6' }
 
 task writePom << {

@@ -14,7 +14,7 @@ public class Calculator {
     @Path("add")
     public String add(@QueryParam("a") int a, @QueryParam("b") int b) {
         long actual = (long) a + b;
-        if (actual > Integer.MAX_VALUE) {
+        if (actual > Integer.MAX_VALUE || actual < Integer.MIN_VALUE) {
             String msg = String.format("a: %d, b: %d", a, b);
             throw new IllegalArgumentException(msg);
         }

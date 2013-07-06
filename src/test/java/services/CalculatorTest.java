@@ -48,6 +48,7 @@ public class CalculatorTest {
                     {Integer.MAX_VALUE, 1},
                     {1, Integer.MAX_VALUE},
                     {Integer.MAX_VALUE - 1000, 1001},
+                    {Integer.MIN_VALUE, Integer.MIN_VALUE},
             });
         }
 

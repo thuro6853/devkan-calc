@@ -6,8 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverBackedSelenium;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static com.thoughtworks.selenium.SeleneseTestBase.fail;
 import static com.thoughtworks.selenium.SeleneseTestCase.assertEquals;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class CalculatorAcceptanceTest {
 	private Selenium selenium;
@@ -19,20 +20,9 @@ public class CalculatorAcceptanceTest {
 		selenium = new WebDriverBackedSelenium(driver, baseUrl);
 
         selenium.open("/devkan-calc/");
+
+        assertThat(selenium.getTitle(), is("The 電卓"));
 	}
-
-    /**
-     * スモークテスト
-     */
-    @Test
-    public void smoke() {
-        selenium.type("id=x1", "1");
-        selenium.type("id=x2", "1");
-        selenium.click("id=send");
-
-        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
-        assertEquals("2", selenium.getText("id=result"));
-    }
 
     /**
      * 足し算の受け入れテスト。
@@ -43,7 +33,7 @@ public class CalculatorAcceptanceTest {
      * </ul>
      */
 	@Test
-	public void add_normal() {
+	public void 通常() {
         selenium.type("id=x1", "2");
         selenium.type("id=x2", "3");
         selenium.click("id=send");
@@ -57,6 +47,72 @@ public class CalculatorAcceptanceTest {
 
         selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
         assertEquals("-10", selenium.getText("id=result"));
+    }
+
+    @Test
+    public void 入力バリエーション() {
+        // 全角数字
+        selenium.type("id=x1", "４");
+        selenium.type("id=x2", "０５");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("9", selenium.getText("id=result"));
+
+        // 漢数字
+        selenium.type("id=x1", "一");
+        selenium.type("id=x2", "1");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("", selenium.getText("id=result"));
+        assertEquals("error", selenium.getText("id=errors"));
+
+        // 入力無しは0扱い
+        selenium.type("id=x1", "");
+        selenium.type("id=x2", "");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("0", selenium.getText("id=result"));
+
+    }
+
+    @Test
+    public void INTの境界() {
+        // 最大値丁度
+        selenium.type("id=x1", "0");
+        selenium.type("id=x2", "2147483647");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("2147483647", selenium.getText("id=result"));
+
+        // 入力値が最大値を超える
+        selenium.type("id=x1", "2147483648");
+        selenium.type("id=x2", "-1");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("", selenium.getText("id=result"));
+        assertEquals("error", selenium.getText("id=errors"));
+
+        // 最小値丁度
+        selenium.type("id=x1", "-2147483648");
+        selenium.type("id=x2", "0");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("-2147483648", selenium.getText("id=result"));
+
+        // 計算結果が最小値を超える
+        selenium.type("id=x1", "-2147483648");
+        selenium.type("id=x2", "-1");
+        selenium.click("id=send");
+
+        selenium.waitForCondition("selenium.browserbot.getCurrentWindow().jQuery.active == 0", "3000");
+        assertEquals("", selenium.getText("id=result"));
+        assertEquals("error", selenium.getText("id=errors"));
     }
 
 	@After

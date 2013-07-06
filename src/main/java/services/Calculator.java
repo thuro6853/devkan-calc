@@ -27,6 +27,24 @@ public class Calculator {
         return actual.toString();
     }
 
+    @GET
+    @Path("multiply")
+    public String multiply(@QueryParam("a") int a, @QueryParam("b") int b) {
+        BigInteger actual = BigInteger.valueOf(a).multiply(BigInteger.valueOf(b));
+        checkIntRange(actual, a, b);
+        return actual.toString();
+    }
+
+    @GET
+    @Path("divide")
+    public String divide(@QueryParam("a") int a, @QueryParam("b") int b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("#DIV/0!");
+        }
+        BigInteger actual = BigInteger.valueOf(a).divide(BigInteger.valueOf(b));
+        return actual.toString();
+    }
+
     private void checkIntRange(BigInteger actual, int a, int b) {
         if (isOutOfInteger(actual)) {
             String msg = String.format("a: %d, b: %d", a, b);

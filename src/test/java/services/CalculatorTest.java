@@ -68,6 +68,7 @@ public class CalculatorTest {
 
     public static class Others {
         Calculator sut = new Calculator();
+
         @Test
         public void 引き算_正常() {
             String actual = sut.subtract(1, 1);
@@ -77,6 +78,28 @@ public class CalculatorTest {
         @Test(expected = IllegalArgumentException.class)
         public void 引き算_異常() {
             sut.subtract(Integer.MIN_VALUE, 1);
+        }
+
+        @Test
+        public void 掛け算_正常() {
+            String actual = sut.multiply(2, 3);
+            assertThat(actual, is("6"));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void 掛け算_異常() {
+            sut.multiply(Integer.MAX_VALUE, 2);
+        }
+
+        @Test
+        public void 割り算_正常() {
+            String actual = sut.divide(101, 2);
+            assertThat(actual, is("50"));
+        }
+
+        @Test(expected = IllegalArgumentException.class)
+        public void 割り算_0除算() {
+            sut.divide(Integer.MAX_VALUE, 0);
         }
     }
 }

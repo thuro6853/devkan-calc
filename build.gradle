@@ -25,11 +25,21 @@ dependencies {
 
 test {
   exclude '**/*IT*'
+  exclude '**/*$*'
+  exclude '**/*AcceptanceTest*'
 }
 
 task integrationTest(type:Test) {
   include '**/*IT*'
   testReportDir = new File(project.testReportDir.parent, 'integration-tests')
+}
+
+task acceptanceTest(type:Test) {
+  include '**/*AcceptanceTest*'
+  doFirst {
+    systemProperties 'host' : host
+    systemProperties 'context' : context
+  }
 }
 
 task wrapper(type: Wrapper) { gradleVersion = '1.6' }

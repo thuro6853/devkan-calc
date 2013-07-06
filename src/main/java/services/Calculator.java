@@ -12,7 +12,12 @@ public class Calculator {
 
     @GET
     @Path("add")
-    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
-        return Integer.toString(a + b);
+    public String add(@QueryParam("a") int a, @QueryParam("b") int b) {
+        long actual = (long) a + b;
+        if (actual > Integer.MAX_VALUE) {
+            String msg = String.format("a: %d, b: %d", a, b);
+            throw new IllegalArgumentException(msg);
+        }
+        return Long.toString(actual);
     }
 }

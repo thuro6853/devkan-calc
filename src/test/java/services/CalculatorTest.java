@@ -39,4 +39,27 @@ public class CalculatorTest {
             assertThat(actual, is(expected));
         }
     }
+
+    @RunWith(Parameterized.class)
+    public static class IllegalCases {
+        @Parameters
+        public static Iterable<Object[]> params() {
+            return Arrays.asList(new Object[][]{
+                    {Integer.MAX_VALUE, 1},
+                    {1, Integer.MAX_VALUE},
+                    {Integer.MAX_VALUE - 1000, 1001},
+            });
+        }
+
+        @Parameter(0)
+        public int a;
+        @Parameter(1)
+        public int b;
+
+        @Test(expected = IllegalArgumentException.class)
+        public void testAdd() {
+            Calculator sut = new Calculator();
+            sut.add(a, b);
+        }
+    }
 }

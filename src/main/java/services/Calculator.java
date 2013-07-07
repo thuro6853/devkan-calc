@@ -13,6 +13,24 @@ public class Calculator {
     @GET
     @Path("add")
     public String add(@QueryParam("a")int a, @QueryParam("b")int b){
-        return "2";
+        return a + b;
+    }
+    
+        @GET
+    @Path("subtract")
+    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
+        return a - b;
+    }
+    
+        @GET
+    @Path("multiply")
+    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
+        return a * b;
+    }
+    
+        @GET
+    @Path("devide")
+    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
+        return a / b;
     }
 }

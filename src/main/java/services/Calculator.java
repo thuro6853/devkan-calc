@@ -17,20 +17,20 @@ public class Calculator {
     }
     
     @GET
-    @Path("add")
-    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
-        return String.valueOf(a / b);
+    @Path("subtract")
+    public String subtract(@QueryParam("a")int a, @QueryParam("b")int b){
+        return String.valueOf(a - b);
     }
     
     @GET
-    @Path("add")
-    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
+    @Path("multiply")
+    public String multiply(@QueryParam("a")int a, @QueryParam("b")int b){
         return String.valueOf(a * b);
     }
     
     @GET
-    @Path("add")
-    public String add(@QueryParam("a")int a, @QueryParam("b")int b){
+    @Path("devide")
+    public String devide(@QueryParam("a")int a, @QueryParam("b")int b){
         return String.valueOf(a / b);
     }
 }

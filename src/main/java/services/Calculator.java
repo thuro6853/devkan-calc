@@ -16,19 +16,19 @@ public class Calculator {
         return a + b;
     }
     
-        @GET
+    @GET
     @Path("subtract")
     public String add(@QueryParam("a")int a, @QueryParam("b")int b){
         return a - b;
     }
     
-        @GET
+    @GET
     @Path("multiply")
     public String add(@QueryParam("a")int a, @QueryParam("b")int b){
         return a * b;
     }
     
-        @GET
+    @GET
     @Path("devide")
     public String add(@QueryParam("a")int a, @QueryParam("b")int b){
         return a / b;
